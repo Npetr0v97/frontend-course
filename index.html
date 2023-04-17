@@ -49,6 +49,27 @@
         <input type="text" name="search_query">
         <button>Search Youtube</button>
     </form>
+    <hr>
+    <h2>More inputs</h2>
+    <form action="/birds">
+        <input type="checkbox" name="agree_tos" id="agree">
+        <label for="agree">I agree to everything</label>
+        <p>
+            <label for="xs">XS</label>
+            <input type="radio" name="size" id="xs" value="xs">
+            <label for="m">M</label>
+            <input type="radio" name="size" id="m" value="m">
+            <label for="l">L</label>
+            <input type="radio" name="size" id="l" value="l">
+        </p>
+        <label for="meal">Please select an Entree</label>
+        <select name="meal" id="meal">
+            <option value="fish">Fish</option>
+            <option value="veg">Vegetarian</option>
+            <option value="steak" selected>Steak</option>
+        </select>
+        <button>Submit</button>
+    </form>
 </body>
 
 </html>
