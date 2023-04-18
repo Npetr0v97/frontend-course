@@ -9,6 +9,39 @@
 </head>
 
 <body>
+    <h1>Race Registration!</h1>
+    <form action="/marathon">
+        <label for="first_name">First name: </label>
+        <input type="text" id="first_name" name="first_name" required>
+        <label for="last_name">Last name: </label>
+        <input type="text" id="last_name" name="last_name" required>
+        <p>
+        <div>Select a race: </div>
+        <input type="radio" id="5k" value="5k" name="race_distance">
+        <label for="5k">Fun Run 5k</label>
+        <br>
+        <input type="radio" id="21k" value="21k" name="race_distance">
+        <label for="21k">Half Marathon</label>
+        <br>
+        <input type="radio" id="42k" value="42k" name="race_distance">
+        <label for="42k">Full Marathon</label>
+        </p>
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <label for="meal">Please select an Entree</label>
+        <select name="age_group" id="age_group">
+            <option value="teenager">10-20</option>
+            <option value="adult" selected>21-50</option>
+            <option value="elder">51+</option>
+        </select>
+        <br>
+        <button>Register!</button>
+    </form>
+    <hr>
+    <hr>
     <h1>Forms</h1>
     <form action="/tacos" method="">
         <p>
@@ -74,7 +107,24 @@
             <label for="cheese">Choose cheese amount: </label>
             <input type="range" id="cheese" min="1" max="100" name="cheese_amount" step="2" value="60">
         </p>
+        <p>
+            <label for="requests">Any Special Requests?</label>
+            <br>
+            <textarea name="requests" id="requests" cols="30" rows="10"
+                placeholder="Type your special request"></textarea>
+        </p>
         <button>Submit</button>
+
+        <h2>Validations Demo</h2>
+        <form action="/dummy">
+            <label for="first">Enter first name</label>
+            <input type="text" name="first" id="first" required>
+            <p>
+                <label for="username">username</label>
+                <input type="text" id="username" name="username" minlength="5" maxlength="20" required>
+            </p>
+            <button>Submit</button>
+        </form>
     </form>
 </body>
 
