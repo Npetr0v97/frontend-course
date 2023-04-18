@@ -25,7 +25,7 @@
         </p>
         <p>
             <label for="number">Enter a number: </label>
-            <input type="number" id="number">
+            <input type="number" id="number" min="1" max="1000">
         </p>
         <button type="submit">Submit</button>
         <button type="button">Just a button that doesn't submit the form</button>
@@ -62,12 +62,18 @@
             <label for="l">L</label>
             <input type="radio" name="size" id="l" value="l">
         </p>
-        <label for="meal">Please select an Entree</label>
-        <select name="meal" id="meal">
-            <option value="fish">Fish</option>
-            <option value="veg">Vegetarian</option>
-            <option value="steak" selected>Steak</option>
-        </select>
+        <p>
+            <label for="meal">Please select an Entree</label>
+            <select name="meal" id="meal">
+                <option value="fish">Fish</option>
+                <option value="veg">Vegetarian</option>
+                <option value="steak" selected>Steak</option>
+            </select>
+        </p>
+        <p>
+            <label for="cheese">Choose cheese amount: </label>
+            <input type="range" id="cheese" min="1" max="100" name="cheese_amount" step="2" value="60">
+        </p>
         <button>Submit</button>
     </form>
 </body>
