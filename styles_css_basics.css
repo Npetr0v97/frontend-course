@@ -1,13 +1,43 @@
-h1 {
-  text-align: center;
-  font-weight: normal;
-  letter-spacing: 15px;
-  font-size: 100px;
-  font-family: Arial;
+h1,
+h1,
+h1,
+h2 {
+  color: darkblue;
 }
 
-p {
-  text-align: right;
-  text-decoration: blue underline wavy 2px;
-  line-height: 30px;
+button {
+  font-size: 30px;
+}
+
+.link {
+  color: darkred;
+  text-decoration: underline wavy cyan;
+  font-weight: bold;
+  background-color: lightblue;
+}
+
+input[type="password"] {
+  color: greenyellow;
+}
+
+.post button:hover {
+  background-color: darkred;
+  color: white;
+}
+
+.post button:active {
+  background-color: #008b2a;
+  color: #818d8b;
+}
+
+a:hover {
+  text-decoration: overline wavy;
+}
+
+.post:nth-of-type(3n) {
+  background-color: #818d8b;
+}
+
+h2::first-letter {
+  font-size: 50px;
 }
