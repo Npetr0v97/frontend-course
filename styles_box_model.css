@@ -48,6 +48,12 @@ h1 {
 button {
   padding: 10px 20px 30px 40px;
 } */
+
+body {
+  margin: 0;
+  font-size: 15px;
+}
+
 div {
   width: 200px;
   height: 200px;
@@ -59,6 +65,8 @@ h1 {
   width: 120px;
   padding-left: 100px;
   padding-top: 50px;
+  margin: 0;
+  font-size: 2em;
 }
 
 #one {
@@ -67,6 +75,7 @@ h1 {
   border-color: black;
   border-style: solid;
   box-sizing: border-box;
+  margin-bottom: 100px
 }
 
 #two {
