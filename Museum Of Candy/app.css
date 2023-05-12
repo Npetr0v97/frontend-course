@@ -3,10 +3,18 @@ body {
     font-family: "Nunito", sans-serif;
 }
 
-.slash-main {
+.blurb h2 {
     color: #EA1c2c;
+    font-weight: 100;
+    font-size: 2.5rem;
 }
 
+.blurb p {
+    color: #f49fb8;
+    font-weight: 100;
+    font-size: 1.125rem;
+    line-height: 2;
+}
 
 #mainNavbar {
     font-size: 1.5rem;
@@ -26,5 +34,31 @@ body {
 
 #mainNavbar .navbar-brand {
     color: #EA1c2c;
+    font-size: 2rem;
 
+}
+
+#headingGroup span {
+    color: #EA1c2c;
+}
+
+#headingGroup h1 {
+    font-weight: 100;
+    font-size: 4rem
+}
+
+.content {
+    margin-top: 100px;
+}
+
+.scrolled {
+    background-color: rgb(222, 192, 222);
+    transition: background-color ease-in 0.25s;
+}
+
+@media (max-width: 1200px) {
+    #headingGroup h1 {
+
+        font-size: 3rem
+    }
 }
