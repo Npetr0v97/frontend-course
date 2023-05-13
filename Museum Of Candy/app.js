@@ -15,4 +15,6 @@ function scrollFunction() {
     }
 }
 
-window.onscroll = function () { scrollFunction() };
+// window.onscroll = function () { scrollFunction() };
+
+window.addEventListener("scroll", scrollFunction);
