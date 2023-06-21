@@ -1,12 +1,14 @@
-const allLinks = document.querySelectorAll('a');
+// Leave the next line, the form must be assigned to a variable named 'form' in order for the exercise test to pass
+const form = document.querySelector("form");
+const product = document.querySelector("#product");
+const qty = document.querySelector("#qty");
+const list = document.querySelector("#list");
 
-// for (let link of allLinks) {
-//     link.innerText = 'I AM A LINK!!!!'
-// }
-
-
-for (let link of allLinks) {
-    link.style.color = 'rgb(0, 108, 134)';
-    link.style.textDecorationColor = 'magenta';
-    link.style.textDecorationStyle = 'wavy'
-}
+form.addEventListener("sumbit", (e) => {
+  e.preventDefault();
+  const newList = document.createElement("li");
+  newList.innerHTML = `${quantity.value} ${product.value}`;
+  list.appendChild(newList);
+  quantity.value = "";
+  product.value = "";
+});
