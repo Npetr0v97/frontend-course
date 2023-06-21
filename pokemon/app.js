@@ -11,3 +11,7 @@ for (let i = 0; i < 150; i++) {
 
   document.querySelector("body").insertAdjacentHTML("beforeend", html);
 }
+
+// const helloBtn = document.querySelector("h1");
+
+// helloBtn.addEventListener("click", () => console.log("hello"));
