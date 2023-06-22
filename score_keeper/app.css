@@ -1,0 +1,69 @@
+body {
+  color: rgb(73, 73, 73);
+}
+
+h1 {
+  font-size: 3.5rem;
+}
+
+.instructions {
+  color: rgb(160, 160, 160);
+  display: block;
+
+  font-size: 1.25rem;
+}
+
+.playto-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.instructions-play {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.dropdown {
+  display: inline;
+}
+
+.main-container {
+  width: 40%;
+}
+
+.main-image {
+  width: 100%;
+  height: 250px;
+}
+
+.btn {
+  box-sizing: content-box;
+}
+
+.select {
+  display: inline;
+  border-radius: 3rem;
+  border-color: rgb(187, 187, 187);
+}
+
+.title {
+  font-weight: 700;
+}
+
+#pl1 {
+  background-color: rgb(73, 221, 172);
+  border: 0px;
+}
+
+#pl2 {
+  background-color: rgb(75, 158, 212);
+  border: 0px;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+#reset {
+  border: 0px;
+  background-color: rgb(221, 71, 121);
+}
