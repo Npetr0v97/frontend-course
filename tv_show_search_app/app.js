@@ -24,20 +24,23 @@ const getTvShows = async function (searchParam) {
     //creating the element which contains the images
 
     if (imgArray.length != 0) {
-      imgArray.forEach(
-        (el) =>
-          (images += `<div class="col-2 mb-5"><img
-  src="${el.show.image.original}"
+      imgArray.forEach((el) => {
+        images += `<div class="col-2 mb-5"><img
+  src="${
+    el.show.image != null
+      ? el.show.image.original
+      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMj5VzCmftQskQHz4SnX-yvkpNP8vN3ZRa6ppgBCt38A&s"
+  }"
   alt="${el.show.name}"
   class="img-fluid px-0 py-0 img-thumbnail shadow"
   style ="width:100%; height:90%; box-sizing:content-box"
-  /></div>`)
-      );
+  /></div>`;
+      });
     }
 
     rowDiv.innerHTML = images;
     //clearing the previous images
-    mainSection.innerHTML = "";
+
     //adding the new images
     mainSection.appendChild(rowDiv);
 
@@ -52,5 +55,6 @@ const getTvShows = async function (searchParam) {
 };
 
 searchButton.addEventListener("click", () => {
+  mainSection.innerHTML = "";
   getTvShows(searchInput.value);
 });
