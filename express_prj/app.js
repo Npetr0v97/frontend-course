@@ -25,10 +25,32 @@ app.get("/dogs", (req, res) => {
   res.send("Woof!!!");
 });
 
+// example with query strings
+app.get("/search", (req, res) => {
+  console.log(req.query);
+  const { q, c } = req.query;
+  res.send(`Hi! These are the results for ${q} and for ${c}`);
+});
+
 // '/'
 app.get("/", (req, res) => {
   console.log("Nothing!!!");
   res.send("This is the home page!!!");
+});
+
+// /r/SOMETHING ELSE
+app.get("/r/:subreddit", (req, res) => {
+  console.log("subreddit!!!");
+  const { subreddit } = req.params;
+  res.send(`<h1>Browsing the ${subreddit} subreddit</h1>`);
+});
+
+// /r/SOMETHING ELSE/SOMETHING ELSE
+app.get("/r/:subreddit/:postId", (req, res) => {
+  console.log("subreddit!!!");
+  const { subreddit, postId } = req.params;
+
+  res.send(`<h1>Browsing the ${subreddit} subreddit with ID of ${postId}</h1>`);
 });
 
 // all the rest
