@@ -3,6 +3,8 @@ const path = require("path"); //module from node required for setting the proper
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, "/public")));
+
 app.set("view engine", "ejs"); //setting the templating engine to ejs. No need to require ejs because with the set method ejs gets required behind the scenes
 app.set("views", path.join(__dirname, "/views")); //this sets the property of views meaning that it will search for the template located in __dirname/views which means the location of the js file and a directory called "views"
 
