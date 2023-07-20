@@ -11,6 +11,10 @@
     <h1>Your comment:</h1>
     <h3>"<%= comment.comment %>" by <%= comment.username %> (ID: <%= comment.id %>)</h3>
     <br>
+    <form method="POST" action="/comments/<%= comment.id %>/?_method=DELETE">
+        <button>Delete</button>
+    </form>
+    <br>
     <a href="/comments">Back To Index</a>
 </body>
 
