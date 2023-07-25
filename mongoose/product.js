@@ -39,10 +39,23 @@ mongoose.connect('mongodb://127.0.0.1:27017/shopApp')
          
     })
 
+
+productSchema.methods.greet = function() {
+    console.log("Hello");
+    console.log(this.name);
+}
+
     const Product = mongoose.model("Product",productSchema);
 
     const bike = new Product({name:"Tire Pump", price: -19.5, categories: ["Cycling"], size: "XS"}); 
 
-    bike.save().then(data => console.log(data)).catch(err => console.log(err));
+    const findProduct = async function() {
+        const foundProduct = await Product.findOne({name: "Bike Helmet"});
+        foundProduct.greet();
+    }
+
+    findProduct();
+
+    // bike.save().then(data => console.log(data)).catch(err => console.log(err));
 
     // Product.findOneAndUpdate({name:"Tire Pump"},{price: -10.99},{new:true, runValidators: true}).then(data => console.log(data)).catch(err => console.log(err)); 
