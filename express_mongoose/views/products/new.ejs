@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Product</title>
+</head>
+<body>
+    <h1>Add a Product</h1>
+
+    <form action="http://localhost:3000/products" method="POST">
+        <label for="name">Product name: </label>
+        <input type="text" id="name" name="name">
+        <label for="price">Price (Unit): </label>
+        <input type="number" id="price" name="price">
+        <label for="category">Select category: </label>
+        <select name="category" id="category">
+        <% for (e of eValues) { %>
+        <option value="<%= e%>"><%= e.charAt(0).toUpperCase() + e.slice(1)%></option>
+        <% } %>
+        </select>
+        <button>Submit</button>
+    </form>
+<a href="http://localhost:3000/products">Back to All Products</a>
+
+</body>
+</html>
