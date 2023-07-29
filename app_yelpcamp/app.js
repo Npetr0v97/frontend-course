@@ -28,12 +28,24 @@ app.use((req,res,next) => {
 })
 
 //this middleware applies only to the path of "/test"
-app.use("/test",(req,res,next) => {
-    console.log("I LOVE TESTS");
+// app.use("/test",(req,res,next) => {
+//     console.log("I LOVE TESTS");
 
-    next();
-})
+//     next();
+// })
 
+//function that can be used as MIDDLEWARE as long as it call next or sends a response to the user
+const verifyPassword = function(req,res,next) {
+
+    const {password} = req.query;
+
+    if (password === "chickennugget") {
+        
+        next();
+    }
+
+    res.send("SORRY YOU NEED A PASSWORD");
+}
 
 const db = mongoose.connection;
 
@@ -74,7 +86,8 @@ app.get("/", (req,res) => {
 })
 
 //test
-app.get("/test", (req,res) => {
+//verifyPassword is applying middleware before the other question
+app.get("/test", verifyPassword, (req,res) => {
     console.log(`REQUEST TIME: ${req.requestTime}`);
 
     res.send("Test page");
@@ -106,11 +119,11 @@ app.delete("/campgrounds/:id", async (req,res)=> {
 
  
 //MIDDLEWARE - if all else fails
-app.use((req,res,next) => {
-    console.log("DOESNT EXIST");
+// app.use((req,res,next) => {
+//     console.log("DOESNT EXIST");
 
 
-})
+// })
 
 
 app.listen(port, () => {
