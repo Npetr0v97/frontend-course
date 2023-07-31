@@ -1,4 +1,5 @@
 const express = require("express");
+const ejsMate = require("ejs-mate");
 const port = 3000;
 const path = require("path");
 const mongoose = require("mongoose");
@@ -14,6 +15,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/yelp-camp", {
 });
 
 // override with POST having ?_method=DELETE
+app.engine("ejs", ejsMate);
 app.use(methodOverride("_method"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -23,6 +25,12 @@ const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => console.log("Database connected"));
+
+app.use((req, res, next) => {
+  //   console.log("Middleware");
+
+  next();
+});
 
 //Index page that display all campgrounds
 app.get("/campgrounds", async (req, res) => {
@@ -75,6 +83,13 @@ app.put("/campgrounds/:id", async (req, res) => {
     ...req.body.campground,
   });
   res.redirect(`/campgrounds/${campground._id}`);
+});
+
+//delete a campground
+app.delete("/campgrounds/:id", async (req, res) => {
+  const { id } = req.params;
+  await Campground.findByIdAndDelete(id);
+  res.redirect(`/campgrounds`);
 });
 
 app.listen(port, () => {
