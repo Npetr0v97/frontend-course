@@ -3,8 +3,6 @@ const port = 3000;
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
-const morgan = require("morgan");
-const ejsMate = require("ejs-mate");
 const Campground = require("./models/campground");
 
 const app = express();
@@ -15,26 +13,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/yelp-camp", {
   useUnifiedTopology: true,
 });
 
-app.engine("ejs", ejsMate);
+// override with POST having ?_method=DELETE
+app.use(methodOverride("_method"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan("tiny"));
-
-//MIDDLEWARE
-app.use((req, res, next) => {
-  req.requestTime = Date.now();
-
-  next();
-});
-
-//this middleware applies only to the path of "/test"
-app.use("/test", (req, res, next) => {
-  console.log("I LOVE TESTS");
-
-  //   next();
-});
 
 const db = mongoose.connection;
 
@@ -72,10 +55,8 @@ app.get("/", (req, res) => {
 });
 
 //test
-app.get("/test", (req, res) => {
-  console.log(`REQUEST TIME: ${req.requestTime}`);
-
-  res.send("Test page");
+app.get("/", (req, res) => {
+  res.send("Hello world");
 });
 
 //Index page that display all campgrounds
@@ -94,18 +75,6 @@ app.put("/campgrounds/:id", async (req, res) => {
     ...req.body.campground,
   });
   res.redirect(`/campgrounds/${campground._id}`);
-});
-
-//Update a campground
-app.delete("/campgrounds/:id", async (req, res) => {
-  const { id } = req.params;
-  const campground = await Campground.findByIdAndDelete(id);
-  res.redirect(`/campgrounds`);
-});
-
-//MIDDLEWARE - if all else fails
-app.use("/", (req, res, next) => {
-  res.send("Page does not exist");
 });
 
 app.listen(port, () => {
