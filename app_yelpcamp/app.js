@@ -3,6 +3,7 @@ const ejsMate = require("ejs-mate");
 const port = 3000;
 const path = require("path");
 const mongoose = require("mongoose");
+const morgan = require("morgan");
 const methodOverride = require("method-override");
 const Campground = require("./models/campground");
 
@@ -25,6 +26,8 @@ const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => console.log("Database connected"));
+
+app.use(morgan("tiny"));
 
 app.use((req, res, next) => {
   //   console.log("Middleware");
