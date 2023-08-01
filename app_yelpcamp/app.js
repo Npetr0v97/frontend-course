@@ -35,6 +35,16 @@ app.use((req, res, next) => {
   next();
 });
 
+const verifyPassword = function (req, res, next) {
+  const { password } = req.query;
+
+  if (password === "t123") {
+    next();
+  } else {
+    res.send("Wrong password");
+  }
+};
+
 //Index page that display all campgrounds
 app.get("/campgrounds", async (req, res) => {
   const campgrounds = await Campground.find({});
@@ -61,8 +71,8 @@ app.get("/campgrounds/:id/edit", async (req, res) => {
 });
 
 //tests
-app.get("/", (req, res) => {
-  res.send("Hello world");
+app.get("/test", verifyPassword, (req, res) => {
+  res.send("Corect password");
 });
 
 //test
