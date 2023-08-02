@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const methodOverride = require("method-override");
 const Campground = require("./models/campground");
+const ExpressError = require("./utils/ExpressError");
+const catchAsync = require("./utils/catchAsync");
+const { stat } = require("fs");
 
 const app = express();
 
@@ -41,15 +44,19 @@ const verifyPassword = function (req, res, next) {
   if (password === "t123") {
     next();
   } else {
-    res.send("Wrong password");
+    // res.send("Wrong password");
+    throw new ExpressError("Password required!", 401);
   }
 };
 
 //Index page that display all campgrounds
-app.get("/campgrounds", async (req, res) => {
-  const campgrounds = await Campground.find({});
-  res.render("campgrounds/index.ejs", { campgrounds });
-});
+app.get(
+  "/campgrounds",
+  catchAsync(async (req, res) => {
+    const campgrounds = await Campground.find({});
+    res.render("campgrounds/index.ejs", { campgrounds });
+  })
+);
 
 //Get the create page
 app.get("/campgrounds/new", (req, res) => {
@@ -57,18 +64,24 @@ app.get("/campgrounds/new", (req, res) => {
 });
 
 //Display one specific campground
-app.get("/campgrounds/:id", async (req, res) => {
-  const { id } = req.params;
-  const campground = await Campground.findById(id);
-  res.render("campgrounds/show.ejs", { campground });
-});
+app.get(
+  "/campgrounds/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const campground = await Campground.findById(id);
+    res.render("campgrounds/show.ejs", { campground });
+  })
+);
 
 //Display one specific campground
-app.get("/campgrounds/:id/edit", async (req, res) => {
-  const { id } = req.params;
-  const campground = await Campground.findById(id);
-  res.render("campgrounds/edit.ejs", { campground });
-});
+app.get(
+  "/campgrounds/:id/edit",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const campground = await Campground.findById(id);
+    res.render("campgrounds/edit.ejs", { campground });
+  })
+);
 
 //tests
 app.get("/test", verifyPassword, (req, res) => {
@@ -85,12 +98,24 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-//Index page that display all campgrounds
-app.post("/campgrounds", async (req, res) => {
-  const campground = new Campground(req.body.campground);
-  await campground.save();
-  res.redirect(`campgrounds/${campground._id}`);
+//test for admin
+app.get("/admin", (req, res) => {
+  throw new ExpressError("You are not an admin", 403);
 });
+
+//Index page that display all campgrounds
+app.post(
+  "/campgrounds",
+  catchAsync(async (req, res, next) => {
+    if (!req.body.campground)
+      throw new ExpressError("Invalid Campground Data", 400); //used for post requests via algorithms outside of the validated form
+    const campground = new Campground(req.body.campground);
+    //   res.send(campground);
+    console.log(campground);
+    await campground.save();
+    res.redirect(`campgrounds/${campground._id}`);
+  })
+);
 
 //Update a campground
 app.put("/campgrounds/:id", async (req, res) => {
@@ -104,21 +129,34 @@ app.put("/campgrounds/:id", async (req, res) => {
 });
 
 //delete a campground
-app.delete("/campgrounds/:id", async (req, res) => {
-  const { id } = req.params;
-  await Campground.findByIdAndDelete(id);
-  res.redirect(`/campgrounds`);
-});
+app.delete(
+  "/campgrounds/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    await Campground.findByIdAndDelete(id);
+    res.redirect(`/campgrounds`);
+  })
+);
 
 //error handling
 
+// app.use((err, req, res, next) => {
+//   console.error("******************************");
+//   console.error("************Error*************");
+//   console.error("******************************");
+//   console.log(err);
+//   //   res.status(500).send("OH BOY, WE GOT AN ERROR");
+//   next(err);
+// });
+
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page not found", 404));
+});
+
 app.use((err, req, res, next) => {
-  console.error("******************************");
-  console.error("************Error*************");
-  console.error("******************************");
-  console.log(err);
-  //   res.status(500).send("OH BOY, WE GOT AN ERROR");
-  next(err);
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode);
+  res.send(message);
 });
 
 app.listen(port, () => {
