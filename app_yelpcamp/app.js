@@ -75,6 +75,11 @@ app.get("/test", verifyPassword, (req, res) => {
   res.send("Corect password");
 });
 
+//tests
+app.get("/error", (req, res) => {
+  chicken.fly();
+});
+
 //test
 app.get("/", (req, res) => {
   res.send("Hello world");
@@ -103,6 +108,17 @@ app.delete("/campgrounds/:id", async (req, res) => {
   const { id } = req.params;
   await Campground.findByIdAndDelete(id);
   res.redirect(`/campgrounds`);
+});
+
+//error handling
+
+app.use((err, req, res, next) => {
+  console.error("******************************");
+  console.error("************Error*************");
+  console.error("******************************");
+  console.log(err);
+  //   res.status(500).send("OH BOY, WE GOT AN ERROR");
+  next(err);
 });
 
 app.listen(port, () => {
