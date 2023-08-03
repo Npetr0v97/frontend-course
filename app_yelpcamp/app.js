@@ -8,6 +8,8 @@ const methodOverride = require("method-override");
 const Campground = require("./models/campground");
 const ExpressError = require("./utils/ExpressError");
 const catchAsync = require("./utils/catchAsync");
+// const Joi = require("joi");
+const { campgroundSchema } = require("./schemas.js");
 const { stat } = require("fs");
 
 const app = express();
@@ -46,6 +48,17 @@ const verifyPassword = function (req, res, next) {
   } else {
     // res.send("Wrong password");
     throw new ExpressError("Password required!", 401);
+  }
+};
+
+const validateCampground = (req, res, next) => {
+  const { error } = campgroundSchema.validate(req.body);
+
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(", ");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
   }
 };
 
@@ -106,19 +119,21 @@ app.get("/admin", (req, res) => {
 //Index page that display all campgrounds
 app.post(
   "/campgrounds",
+  validateCampground,
   catchAsync(async (req, res, next) => {
-    if (!req.body.campground)
-      throw new ExpressError("Invalid Campground Data", 400); //used for post requests via algorithms outside of the validated form
+    // if (!req.body.campground)
+    //   throw new ExpressError("Invalid Campground Data", 400); //used for post requests via algorithms outside of the validated form
+
     const campground = new Campground(req.body.campground);
     //   res.send(campground);
-    console.log(campground);
+    // console.log(campground);
     await campground.save();
     res.redirect(`campgrounds/${campground._id}`);
   })
 );
 
 //Update a campground
-app.put("/campgrounds/:id", async (req, res) => {
+app.put("/campgrounds/:id", validateCampground, async (req, res) => {
   const { id } = req.params;
   // console.log(id,req.body.campground);
 
@@ -155,8 +170,9 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
+  if (!err.message) err.essage = "Oh no, something went wrong";
   res.status(statusCode);
-  res.send(message);
+  res.render("error", { err });
 });
 
 app.listen(port, () => {
