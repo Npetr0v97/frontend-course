@@ -71,7 +71,7 @@ const verifyPassword = function (req, res, next) {
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
-  res.locals.еррор = req.flash("error");
+  res.locals.error = req.flash("error");
   next();
 });
 
