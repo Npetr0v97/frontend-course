@@ -37,7 +37,9 @@ router.get(
   "/:id",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id).populate("reviews");
+    const campground = await Campground.findById(id)
+      .populate("reviews")
+      .populate("author");
 
     if (!campground) {
       req.flash("error", "Cannot find that campground");
@@ -72,6 +74,7 @@ router.post(
     //   throw new ExpressError("Invalid Campground Data", 400); //used for post requests via algorithms outside of the validated form
 
     const campground = new Campground(req.body.campground);
+    campground.author = req.user._id;
     //   res.send(campground);
     // console.log(campground);
     await campground.save();
