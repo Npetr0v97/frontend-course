@@ -12,8 +12,11 @@ const Review = require("./models/review");
 // const Joi = require("joi");
 const { campgroundSchema, reviewSchema } = require("./schemas.js");
 const { stat } = require("fs");
-const campgrounds = require("./routes/campgrounds");
-const reviews = require("./routes/reviews");
+
+const campgroundRoutes = require("./routes/campgrounds");
+const reviewRoutes = require("./routes/reviews");
+const userRoutes = require("./routes/users");
+
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
@@ -80,13 +83,15 @@ const verifyPassword = function (req, res, next) {
 };
 
 app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
 
-app.use("/campgrounds", campgrounds);
-app.use("/campgrounds/:id/reviews", reviews);
+app.use("/", userRoutes);
+app.use("/campgrounds", campgroundRoutes);
+app.use("/campgrounds/:id/reviews", reviewRoutes);
 app.use(express.static(path.join(__dirname, "public")));
 
 //tests
