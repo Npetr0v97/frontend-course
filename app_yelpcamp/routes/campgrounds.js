@@ -5,15 +5,21 @@ const Campground = require("../models/campground");
 const { isLoggedIn, validateCampground, isAuthor } = require("../middleware");
 const campgrounds = require("../controllers/campgrounds");
 const campground = require("../models/campground");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 router
   .route("/")
   .get(catchAsync(campgrounds.index))
-  .post(
-    isLoggedIn,
-    validateCampground,
-    catchAsync(campgrounds.createCampground)
-  );
+  // .post(
+  //   isLoggedIn,
+  //   validateCampground,
+  //   catchAsync(campgrounds.createCampground)
+  // )
+  .post(upload.array("image"), (req, res) => {
+    console.log(req.body, req.files);
+    res.send("IT WORKED");
+  });
 
 //Get the create page
 router.get("/new", isLoggedIn, campgrounds.renderNewForm);
