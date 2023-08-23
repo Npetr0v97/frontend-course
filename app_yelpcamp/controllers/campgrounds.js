@@ -39,14 +39,16 @@ module.exports.renderEditForm = async (req, res) => {
 };
 
 module.exports.createCampground = async (req, res, next) => {
-  // if (!req.body.campground)
-  //   throw new ExpressError("Invalid Campground Data", 400); //used for post requests via algorithms outside of the validated form
-
   const campground = new Campground(req.body.campground);
+  campground.images = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
   campground.author = req.user._id;
   //   res.send(campground);
   // console.log(campground);
   await campground.save();
+  console.log(campground);
   req.flash("success", "Successfully made a new campground!");
   res.redirect(`campgrounds/${campground._id}`);
 };
