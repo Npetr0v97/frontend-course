@@ -38,6 +38,7 @@ const seedDB = async function () {
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis consectetur beatae quasi. Corrupti magnam, deserunt blanditiis porro, amet animi aspernatur sapiente eveniet temporibus eaque exercitationem fugiat debitis neque dignissimos minima.",
       price: `${Math.floor(Math.random() * 1000)}`,
+      geometry: { type: "Point", coordinates: [19.0403594, 47.4979937] },
     });
     await newCampground.save();
   }
