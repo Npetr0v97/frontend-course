@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const port = 3000;
 const mongoose = require("mongoose");
 const cities = require("./cities");
@@ -6,10 +10,9 @@ const Campground = require("../models/campground");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 
 const mapBoxToken = process.env.MAPBOX_TOKEN;
-console.log(mapBoxToken);
+
 const geocoder = mbxGeocoding({
-  accessToken:
-    "pk.eyJ1IjoicGV0cjB2OTciLCJhIjoiY2xscHE3bzQxMGI4NzNncHNjcDRiM2poaiJ9.97Yp3hCxcArEDjXLS4atNA",
+  accessToken: mapBoxToken,
 });
 
 //connecting to the database
