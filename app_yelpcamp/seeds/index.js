@@ -3,6 +3,14 @@ const mongoose = require("mongoose");
 const cities = require("./cities");
 const { places, descriptors } = require("./seedHelpers");
 const Campground = require("../models/campground");
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+console.log(mapBoxToken);
+const geocoder = mbxGeocoding({
+  accessToken:
+    "pk.eyJ1IjoicGV0cjB2OTciLCJhIjoiY2xscHE3bzQxMGI4NzNncHNjcDRiM2poaiJ9.97Yp3hCxcArEDjXLS4atNA",
+});
 
 //connecting to the database
 mongoose.connect("mongodb://127.0.0.1:27017/yelp-camp", {
@@ -31,8 +39,8 @@ const seedDB = async function () {
           filename: "YelpCamp/b5qoes06eplmujartbdm",
         },
         {
-          url: "https://res.cloudinary.com/dqphwin68/image/upload/v1692824751/YelpCamp/t9sefmfj8cojrftgt5om.jpg",
-          filename: "YelpCamp/t9sefmfj8cojrftgt5om",
+          url: "https://res-console.cloudinary.com/dqphwin68/thumbnails/transform/v1/image/upload/Y19saW1pdCxoXzE2MDAsd18xNjAwLGZfanBnLGZsX2xvc3N5LmFueV9mb3JtYXQucHJlc2VydmVfdHJhbnNwYXJlbmN5LnByb2dyZXNzaXZl/v1/WWVscENhbXAvZ3BkbGFydjViMm04cnBrb3MxbjE=/template_primary",
+          filename: "YelpCamp/gpdlarv5b2m8rpkos1n1",
         },
       ],
       description:
@@ -40,6 +48,11 @@ const seedDB = async function () {
       price: `${Math.floor(Math.random() * 1000)}`,
       geometry: { type: "Point", coordinates: [19.0403594, 47.4979937] },
     });
+
+    const geoData = await geocoder
+      .forwardGeocode({ query: newCampground.location, limit: 1 })
+      .send();
+    newCampground.geometry = geoData.body.features[0].geometry;
     await newCampground.save();
   }
 };
