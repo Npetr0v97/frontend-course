@@ -30,7 +30,7 @@ const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const seedDB = async function () {
   await Campground.deleteMany({});
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 300; i++) {
     const random1000 = Math.floor(Math.random() * 1000);
     const newCampground = new Campground({
       author: "64de2c435a409641d819a85c",
@@ -49,13 +49,19 @@ const seedDB = async function () {
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis consectetur beatae quasi. Corrupti magnam, deserunt blanditiis porro, amet animi aspernatur sapiente eveniet temporibus eaque exercitationem fugiat debitis neque dignissimos minima.",
       price: `${Math.floor(Math.random() * 1000)}`,
-      geometry: { type: "Point", coordinates: [19.0403594, 47.4979937] },
+      geometry: {
+        type: "Point",
+        coordinates: [
+          cities[random1000].longitude,
+          cities[random1000].latitude,
+        ],
+      },
     });
 
-    const geoData = await geocoder
-      .forwardGeocode({ query: newCampground.location, limit: 1 })
-      .send();
-    newCampground.geometry = geoData.body.features[0].geometry;
+    // const geoData = await geocoder
+    //   .forwardGeocode({ query: newCampground.location, limit: 1 })
+    //   .send();
+    // newCampground.geometry = geoData.body.features[0].geometry;
     await newCampground.save();
   }
 };
