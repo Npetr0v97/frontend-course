@@ -16,6 +16,7 @@ const Review = require("./models/review");
 // const Joi = require("joi");
 const { campgroundSchema, reviewSchema } = require("./schemas.js");
 const { stat } = require("fs");
+const mongoSanitize = require("express-mongo-sanitize");
 
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
@@ -41,14 +42,17 @@ app.use(methodOverride("_method"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(mongoSanitize());
 
 const sessionConfig = {
+  name: "session",
   secret: "thisshouldbeabettersecret!",
   resave: false,
   saveUninitialized: true,
   cookie: {
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
+    // secure: true,
     httpOnly: true,
   },
 };
@@ -108,9 +112,8 @@ app.get("/error", (req, res) => {
   chicken.fly();
 });
 
-//test
 app.get("/", (req, res) => {
-  res.send("Hello world");
+  res.render("home");
 });
 
 //test for admin
