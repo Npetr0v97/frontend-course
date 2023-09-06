@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const ejsMate = require("ejs-mate");
-const port = 3000;
+const port = process.env.PORT || 3000;
 const path = require("path");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -67,6 +67,8 @@ const styleSrcUrls = [
   "https://fonts.googleapis.com/",
   "https://use.fontawesome.com/",
   "https://cdn.jsdelivr.net",
+  "https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css",
+  "https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css",
 ];
 const connectSrcUrls = [
   "https://api.mapbox.com/",
