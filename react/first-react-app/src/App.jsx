@@ -10,16 +10,19 @@ import Die from "./Die";
 import ListPicker from "./ListPicker";
 import Heading from "./Heading";
 import ColorList from "./ColorList";
+import Slots from "./Slots";
 
 function App() {
   return (
     <div>
-      <ColorList colors={["red", "pink", "purple", "teal"]} />
+      <Slots val1="🍌" val2="🍌" val3="🍒" />
+      <Slots val1="🍒" val2="🍒" val3="🍒" />
+      {/* <ColorList colors={["red", "pink", "purple", "teal"]} />
       <Heading color="blue" text="Howdy" fontSize="20px" />
       <Heading color="teal" text="Blah" fontSize="30px" />
       <DoubleDice />
       <DoubleDice />
-      <DoubleDice />
+      <DoubleDice /> */}
 
       {/* <ListPicker values={[1, 2, 3]} />
       <ListPicker values={["a", "b", "c"]} />
