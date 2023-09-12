@@ -2,6 +2,8 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import Clicker from "./Clicker";
+import Form from "./Form";
 
 import ShoppingList from "./ShoppingList";
 
@@ -15,6 +17,9 @@ const data = [
 function App() {
   return (
     <div>
+      <Clicker message="HI!!!!" buttonText="Please Click Me" />
+      <Clicker message="Please Stop Clicking Me" buttonText="do not click" />
+      <Form />
       <ShoppingList items={data} />
     </div>
   );
