@@ -4,8 +4,8 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import Clicker from "./Clicker";
 import Form from "./Form";
-
 import ShoppingList from "./ShoppingList";
+import ColorGrid from "./ColorGrid";
 
 const data = [
   { id: 1, item: "eggs", quantity: 12, completed: false },
@@ -17,6 +17,7 @@ const data = [
 function App() {
   return (
     <div>
+      <ColorGrid />
       <Clicker message="HI!!!!" buttonText="Please Click Me" />
       <Clicker message="Please Stop Clicking Me" buttonText="do not click" />
       <Form />
