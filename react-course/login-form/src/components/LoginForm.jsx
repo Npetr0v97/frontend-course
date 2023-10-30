@@ -8,12 +8,13 @@ import { useContext, useState } from "react";
 import styles from "./LoginForm.module.css";
 import { users } from "../seedData/data";
 import { LoggedInContext, UserContext } from "../contexts/loggedUserContext";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 function LoginForm({ userNameSetter, isLoggedInSetter }) {
   const initialUser = { username: "", password: "" };
   const [userData, setUserData] = useState(initialUser);
 
-  const isLoggedIn = useContext(LoggedInContext);
+  const isLoggedIn = useLocalStorage();
 
   function changeHandler(e) {
     setUserData((prevState) => {
@@ -54,9 +55,9 @@ function LoginForm({ userNameSetter, isLoggedInSetter }) {
           onChange={changeHandler}
         />
         <label htmlFor="password">Password</label>
-        {/* TODO change type to password */}
+
         <input
-          type="text"
+          type="password"
           id="password"
           name="password"
           value={userData.password}
