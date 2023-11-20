@@ -1,15 +1,17 @@
-import { useState } from "react";
-
+import Profile from "../components/Profile";
+import Login from "../components/Login";
 import "./App.css";
+import ChangeColor from "../components/ChangeColor";
+
+//Store
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1>Hello World</h1>
+      <Profile />
+      <Login />
+      <ChangeColor />
     </>
   );
 }
-
 export default App;
