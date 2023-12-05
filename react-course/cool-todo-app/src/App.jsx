@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import InfoPanel from "./components/InfoPanel";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <InfoPanel />
+
+      {/* 1. Add tasks into a list
+2. Each  task can have a different label
+3. Group tasks by labels
+4. Add different labels with different color options (6 color options)
+5. Historically view items
+6. Create a favorites list of items that can be quickly added (e.g. 2h 30m Endurance Run with "Aerobic training" label)
+7. Display a new inspirational quote every day
+8. Display a new random fun fact every day
+9. Scrape some insights from James Clear's weekly mails
+10. Format different letters based on the current date 
+11. Good morning/evening/afternoon based on current time in a bubble
+12. Implement a separate page where you can check completed tasks hystorically 
+13. custom hook that fetches and returns an array with 3 quotes/facts*/}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

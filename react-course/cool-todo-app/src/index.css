@@ -1,3 +1,5 @@
+@import "../utils/variables.css";
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -5,7 +7,14 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+
+  background-color: var(--light-purple);
+  background-image: linear-gradient(
+    62deg,
+    var(--light-purple) 50%,
+    var(--white-blue) 100%
+  );
+  background-size: cover;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

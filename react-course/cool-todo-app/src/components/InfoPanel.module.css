@@ -1,0 +1,49 @@
+@import "../../utils/variables.css";
+
+.mainDiv {
+  background-color: var(--main-purple);
+  background-image: linear-gradient(
+    62deg,
+    var(--main-purple) 50%,
+    var(--secondary-purple) 100%
+  );
+  width: 600px;
+  height: 300px;
+  margin: 0 auto;
+  border-radius: 65px 25px;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mainDiv:hover {
+  box-shadow: 0 15px 8px rgba(0, 0, 0, 0.4);
+  transform: translateY(-15px); /* Move the div up by 5 pixels on hover */
+}
+
+.title {
+  padding-top: 40px;
+  font-size: 1.5em;
+}
+
+.content {
+  padding: 0 40px;
+  font-size: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  /* Adjust styles for smaller screens */
+  .mainDiv {
+    width: 450px;
+    height: 225px;
+  }
+
+  .title {
+    padding-top: 20px;
+    font-size: 1.25em;
+  }
+
+  .content {
+    padding: 0 40px;
+    font-size: 0.9em;
+  }
+}
