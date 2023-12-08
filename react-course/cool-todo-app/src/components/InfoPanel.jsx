@@ -10,6 +10,9 @@ function InfoPanel() {
   const dummyData = useSelector((state) => state.dummyData.value);
   const dispatch = useDispatch();
 
+  //api -> https://docs.zenquotes.io/zenquotes-documentation/
+  //fetch via AXIOS
+
   function onClickHandler() {
     console.log("Clicked");
     dispatch(setDummyData("Nikolay Petrov"));

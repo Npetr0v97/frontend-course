@@ -11,6 +11,7 @@
   height: 300px;
   margin: 0 auto;
   border-radius: 65px 25px;
+  color: white;
 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
