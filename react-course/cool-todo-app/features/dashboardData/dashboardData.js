@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  inspirationalQuote: {
-    content: "kuramiyanko",
-    author: "mi az be",
-  },
+  inspirationalQuoteArray: [
+    {
+      content: "Pending load...",
+      author: "...",
+    },
+  ],
 };
 
 export const dashboardDataSlice = createSlice({
@@ -19,8 +21,7 @@ export const dashboardDataSlice = createSlice({
       state = initialState;
     },
     setInspirationalQuote: (state, action) => {
-      console.log("called");
-      state.inspirationalQuote = action.payload;
+      state.inspirationalQuoteArray = action.payload;
     },
   },
 });
