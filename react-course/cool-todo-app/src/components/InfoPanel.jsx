@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./InfoPanel.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  resetDummyData,
-  setDummyData,
-} from "../../features/dummyData/dummyDataSlice";
-import { setInspirationalQuote } from "../../features/dashboardData/dashboardData";
-import axios from "axios";
+import { useFetchData } from "../hooks/useFetchData";
 
 function InfoPanel() {
-  const dummyData = useSelector((state) => state.dummyData.value);
   const inspirationalQuoteData = useSelector(
     (state) => state.dashboardData.inspirationalQuoteArray
   );
@@ -21,66 +15,21 @@ function InfoPanel() {
   //api -> https://docs.zenquotes.io/zenquotes-documentation/
   //fetch via AXIOS
 
-  //TODO Trigger the API untill it has collected 3 different quotes into an array.
-  //TODO transfer this useEffect into a custom hook.
+  const inspQuoteOptions = {
+    method: "GET",
+    url: "https://olato-quotes.p.rapidapi.com/motivation",
+    params: {
+      quotes: "random quotes",
+    },
+    headers: {
+      "X-RapidAPI-Key": "79a2ec61b7mshf8c268be9dea7c1p14b9dfjsnd963c6ef5fb1",
+      "X-RapidAPI-Host": "olato-quotes.p.rapidapi.com",
+    },
+  };
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    async function fetchData() {
-      const quoteArray = [];
-      //change to -> https://rapidapi.com/parthbhuva97/api/quotes85/pricing when doing the final version
-      const optionsAXIOS = {
-        method: "GET",
-        url: "https://olato-quotes.p.rapidapi.com/motivation",
-        params: {
-          quotes: "random quotes",
-        },
-        headers: {
-          "X-RapidAPI-Key":
-            "79a2ec61b7mshf8c268be9dea7c1p14b9dfjsnd963c6ef5fb1",
-          "X-RapidAPI-Host": "olato-quotes.p.rapidapi.com",
-        },
-        signal,
-      };
-      try {
-        while (quoteArray.length !== 3) {
-          const data = await axios.request(optionsAXIOS);
-          const { quote } = data.data;
-          const author = quote.slice(
-            (quote.length - quote.lastIndexOf("-") - 1) * -1
-          );
-          const content = quote.slice(0, quote.lastIndexOf("-") - 1);
+  useFetchData(inspQuoteOptions);
 
-          if (quoteArray.length == 0) {
-            quoteArray.push({ content, author });
-          } else if (!quoteArray.some((el) => el.content === content)) {
-            quoteArray.push({ content, author });
-          }
-
-          if (quoteArray.length == 1 || quoteArray.length == 3) {
-            dispatch(setInspirationalQuote([...quoteArray]));
-            if (quoteArray.length == 3) {
-              break;
-            }
-          }
-        }
-
-        console.log(quoteArray);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    fetchData();
-
-    return () => {
-      // cleanup
-
-      controller.abort();
-    };
-  }, []);
-
-  //TODO onclick should change between the options from the Array. Meaning that a rerender needs to happen
+  //TODO the text in the div cannot be selectable. Only a cursor should be used as the pointer
   function onClickHandler() {
     if (currentInspirationQuoteIndex < inspirationalQuoteData.length - 1) {
       setCurrentInspirationalQuoteIndex((prevState) => prevState + 1);
