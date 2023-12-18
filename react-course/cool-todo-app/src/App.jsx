@@ -1,11 +1,15 @@
 import "./App.css";
 import InfoPanel from "./components/InfoPanel";
+import FactPanel from "./components/FactPanel";
+import Frame from "./components/wrappers/Frame";
 
 function App() {
   return (
     <>
-      <InfoPanel />
-
+      <Frame>
+        <InfoPanel />
+        <FactPanel />
+      </Frame>
       {/* 1. Add tasks into a list
 2. Each  task can have a different label
 3. Group tasks by labels

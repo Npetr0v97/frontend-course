@@ -37,8 +37,6 @@ export function useFetchData(options) {
             }
           }
         }
-
-        console.log(quoteArray);
       } catch (e) {
         console.log(e);
       }

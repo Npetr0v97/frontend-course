@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import styles from "./InfoPanel.module.css";
+import styles from "./FactPanel.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useFetchData } from "../hooks/useFetchData";
 
-function InfoPanel() {
+function FactPanel() {
   const inspirationalQuoteData = useSelector(
     (state) => state.dashboardData.inspirationalQuoteArray
   );
+
+  // console.log(inspirationalQuoteData);
 
   const [currentInspirationQuoteIndex, setCurrentInspirationalQuoteIndex] =
     useState(0);
@@ -47,4 +49,4 @@ function InfoPanel() {
   );
 }
 
-export default InfoPanel;
+export default FactPanel;

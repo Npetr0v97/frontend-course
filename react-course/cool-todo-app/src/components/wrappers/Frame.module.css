@@ -1,0 +1,5 @@
+@import "../../../utils/variables.css";
+
+.wrapper {
+  border: 2px solid red;
+}
