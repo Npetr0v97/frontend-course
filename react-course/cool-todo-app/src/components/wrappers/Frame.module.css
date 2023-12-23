@@ -1,5 +1,13 @@
 @import "../../../utils/variables.css";
 
 .wrapper {
-  border: 2px solid red;
+  /* border: 1px solid red; */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  justify-content: space-around;
+  align-items: center;
+
+  height: 30rem;
 }

@@ -7,6 +7,11 @@ const initialState = {
       author: "...",
     },
   ],
+  interestingFactArray:[
+    {
+      content: "Pending load..."
+    }
+  ]
 };
 
 export const dashboardDataSlice = createSlice({
@@ -23,10 +28,13 @@ export const dashboardDataSlice = createSlice({
     setInspirationalQuote: (state, action) => {
       state.inspirationalQuoteArray = action.payload;
     },
+    setInterestingFact: (state, action) => {
+      state.interestingFactArray = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { resetData, setInspirationalQuote } = dashboardDataSlice.actions;
+export const { resetData, setInspirationalQuote, setInterestingFact } = dashboardDataSlice.actions;
 
 export default dashboardDataSlice.reducer;

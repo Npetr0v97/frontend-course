@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import styles from "./InfoPanel.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useFetchData } from "../hooks/useFetchData";
+import { onClickIndexChanger } from "../../utils/helperFunctions";
 
 function InfoPanel() {
   const inspirationalQuoteData = useSelector(
     (state) => state.dashboardData.inspirationalQuoteArray
   );
 
-  const [currentInspirationQuoteIndex, setCurrentInspirationalQuoteIndex] =
+  const [currentArrIndex, setCurrentArrIndex] =
     useState(0);
   //api -> https://docs.zenquotes.io/zenquotes-documentation/
   //fetch via AXIOS
@@ -25,23 +26,16 @@ function InfoPanel() {
     },
   };
 
-  useFetchData(inspQuoteOptions);
+  useFetchData(inspQuoteOptions,"QUOTE");
 
-  function onClickHandler() {
-    if (currentInspirationQuoteIndex < inspirationalQuoteData.length - 1) {
-      setCurrentInspirationalQuoteIndex((prevState) => prevState + 1);
-    } else {
-      setCurrentInspirationalQuoteIndex(0);
-    }
-  }
   return (
-    <div className={styles.mainDiv} onClick={onClickHandler}>
+    <div className={styles.mainDiv} onClick={()=>{onClickIndexChanger(currentArrIndex,inspirationalQuoteData.length,setCurrentArrIndex)}}>
       <h3 className={styles.title}>Inspirational Quote</h3>
       <p className={styles.content}>
-        {inspirationalQuoteData[currentInspirationQuoteIndex].content}
+        {inspirationalQuoteData[currentArrIndex].content}
       </p>
       <p>
-        Author: {inspirationalQuoteData[currentInspirationQuoteIndex].author}
+        Author: {inspirationalQuoteData[currentArrIndex].author}
       </p>
     </div>
   );

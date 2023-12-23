@@ -3,14 +3,14 @@
 .mainDiv {
   background-color: var(--main-purple);
   background-image: linear-gradient(
-    62deg,
-    var(--main-purple) 50%,
-    var(--secondary-purple) 100%
+    154deg,
+    var(--main-purple) 25%,
+    var(--pale-green) 175%
   );
   width: 600px;
   height: 300px;
-  margin: 0 auto;
-  border-radius: 65px 25px;
+  margin: 20px;
+  border-radius: 25px 65px;
   color: white;
   user-select: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
