@@ -9,8 +9,7 @@ function InfoPanel() {
     (state) => state.dashboardData.inspirationalQuoteArray
   );
 
-  const [currentArrIndex, setCurrentArrIndex] =
-    useState(0);
+  const [currentArrIndex, setCurrentArrIndex] = useState(0);
   //api -> https://docs.zenquotes.io/zenquotes-documentation/
   //fetch via AXIOS
 
@@ -26,17 +25,24 @@ function InfoPanel() {
     },
   };
 
-  useFetchData(inspQuoteOptions,"QUOTE");
+  useFetchData(inspQuoteOptions, "QUOTE");
 
   return (
-    <div className={styles.mainDiv} onClick={()=>{onClickIndexChanger(currentArrIndex,inspirationalQuoteData.length,setCurrentArrIndex)}}>
+    <div
+      className={styles.mainDiv}
+      onClick={() => {
+        onClickIndexChanger(
+          currentArrIndex,
+          inspirationalQuoteData.length,
+          setCurrentArrIndex
+        );
+      }}
+    >
       <h3 className={styles.title}>Inspirational Quote</h3>
       <p className={styles.content}>
         {inspirationalQuoteData[currentArrIndex].content}
       </p>
-      <p>
-        Author: {inspirationalQuoteData[currentArrIndex].author}
-      </p>
+      <p>Author: {inspirationalQuoteData[currentArrIndex].author}</p>
     </div>
   );
 }

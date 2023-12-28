@@ -1,17 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const inspirationalQuoteArray = JSON.parse(
+  localStorage.getItem("inspirationalQuoteArray")
+) || [
+  {
+    content: "Pending load...",
+    author: "...",
+  },
+];
+const interestingFactArray = JSON.parse(
+  localStorage.getItem("interestingFactArray")
+) || [
+  {
+    content: "Pending load...",
+    author: "...",
+  },
+];
 const initialState = {
-  inspirationalQuoteArray: [
-    {
-      content: "Pending load...",
-      author: "...",
-    },
-  ],
-  interestingFactArray:[
-    {
-      content: "Pending load..."
-    }
-  ]
+  inspirationalQuoteArray,
+  interestingFactArray,
 };
 
 export const dashboardDataSlice = createSlice({
@@ -27,14 +34,23 @@ export const dashboardDataSlice = createSlice({
     },
     setInspirationalQuote: (state, action) => {
       state.inspirationalQuoteArray = action.payload;
+      localStorage.setItem(
+        "inspirationalQuoteArray",
+        JSON.stringify(action.payload)
+      );
     },
     setInterestingFact: (state, action) => {
       state.interestingFactArray = action.payload;
+      localStorage.setItem(
+        "interestingFactArray",
+        JSON.stringify(action.payload)
+      );
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { resetData, setInspirationalQuote, setInterestingFact } = dashboardDataSlice.actions;
+export const { resetData, setInspirationalQuote, setInterestingFact } =
+  dashboardDataSlice.actions;
 
 export default dashboardDataSlice.reducer;
