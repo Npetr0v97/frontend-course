@@ -5,9 +5,6 @@ import Frame from "./components/wrappers/Frame";
 import ToDoList from "./components/ToDoList";
 
 function App() {
-  // const currentDate = new Date();
-  // console.log(currentDate, currentDate.getDay(),currentDate.getMonth(),currentDate.getFullYear());
-
   //clear() -> Clear storage/ remove(<key>) -> remove key-value pair
 
   //TODO-----------
@@ -29,10 +26,11 @@ function App() {
   // 3. Upload plus fetch tasks from MongoDB
 
   //TESTING--------
-  // Screenshots in FB CHAT
+
+  //DONE-----------
   // Display a new inspirational quote every day
   // Display a new random fun fact every day
-  //DONE-----------
+
   return (
     <>
       <Frame>
