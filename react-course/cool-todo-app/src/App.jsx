@@ -3,6 +3,8 @@ import InfoPanel from "./components/InfoPanel";
 import FactPanel from "./components/FactPanel";
 import Frame from "./components/wrappers/Frame";
 import ToDoList from "./components/ToDoList";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function App() {
   //clear() -> Clear storage/ remove(<key>) -> remove key-value pair
@@ -30,6 +32,19 @@ function App() {
   //DONE-----------
   // Display a new inspirational quote every day
   // Display a new random fun fact every day
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get("api/todos");
+        console.log(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <>
