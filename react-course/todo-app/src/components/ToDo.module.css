@@ -1,10 +1,11 @@
 .mainDiv {
   margin-left: 20px;
+  margin-top: 6px;
   display: flex; /* Use flexbox for alignment */
   align-items: center; /* Align items vertically in the center */
   background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent black background */
   border-radius: 8px; /* Rounded edges */
-  padding: 15px; /* Add padding for content spacing */
+  padding: 12px; /* Add padding for content spacing */
 }
 
 .content {
@@ -25,4 +26,12 @@
 .checkbox:checked {
   background-color: #555; /* Change background color when checked */
   border-color: #555; /* Change border color when checked */
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px; /* Adjust spacing as needed */
+  margin-left: auto;
 }

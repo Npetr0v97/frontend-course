@@ -25,10 +25,10 @@ export const dashboardDataSlice = createSlice({
       state = initialState;
     },
     setInspirationalQuote: (state, action) => {
-      state.inspirationalQuoteArray = action.payload;
+      return { ...state, inspirationalQuoteArray: action.payload };
     },
     setInterestingFact: (state, action) => {
-      state.interestingFactArray = action.payload;
+      return { ...state, interestingFactArray: action.payload };
     },
   },
 });

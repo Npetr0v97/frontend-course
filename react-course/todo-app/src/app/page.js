@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import InfoPanel from "@/components/InfoPanel";
 import Frame from "@/components/wrappers/Frame";
-import ToDoList from "@/components/ToDoList";
+import ToDoList from "@/components/ToDoList.js";
 import FactPanel from "@/components/FactPanel";
 import { store } from "./store";
 import { Provider } from "react-redux";
