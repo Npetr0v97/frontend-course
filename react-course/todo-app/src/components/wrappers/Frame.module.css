@@ -1,7 +1,5 @@
-@import "../../../utils/variables.css";
-
 .wrapper {
-  /* border: 1px solid red; */
+  /* Center the content (divs) */
   margin: 0 auto;
   display: flex;
   flex-direction: row;

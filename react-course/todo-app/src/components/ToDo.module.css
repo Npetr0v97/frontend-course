@@ -8,11 +8,11 @@
   margin-left: 20px;
   margin-top: 6px;
   min-width: 75%;
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Align items vertically in the center */
-  background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent black background */
-  border-radius: 8px; /* Rounded edges */
-  padding: 12px; /* Add padding for content spacing */
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px;
   box-sizing: border-box;
 }
 
@@ -35,6 +35,7 @@
   outline: none;
 }
 
+/* Styling an hr element so that it appears as an animated strikethrough from left to right */
 .strikethrough {
   content: "";
   position: absolute;
@@ -56,25 +57,25 @@
 }
 
 .checkbox {
-  margin-right: 8px; /* Add spacing between the checkbox and label */
+  margin-right: 8px;
 
-  border: 2px solid #555; /* Add border */
-  width: 16px; /* Set width */
-  height: 16px; /* Set height */
-  border-radius: 4px; /* Add rounded corners */
-  outline: none; /* Remove outline on focus */
-  cursor: pointer; /* Add pointer cursor */
+  border: 2px solid #555;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
 }
 
 .checkbox:checked {
-  background-color: #555; /* Change background color when checked */
-  border-color: #555; /* Change border color when checked */
+  background-color: #555;
+  border-color: #555;
 }
 
 .deleteButton {
   background: none;
   border: none;
   cursor: pointer;
-  margin-left: 10px; /* Adjust spacing as needed */
+  margin-left: 10px;
   margin-left: auto;
 }

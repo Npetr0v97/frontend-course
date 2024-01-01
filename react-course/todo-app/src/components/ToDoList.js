@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-// import styles from "./ToDoList.module.css";
 import "./ToDoList.css";
 import ToDo from "./ToDo";
 import { useState } from "react";
 import axios from "axios";
 
 export function ToDoList() {
+  // The state that will handle the input field
   const [todoText, setTodoText] = useState("");
-  // const todosArray = useSelector((state) => state.todosData);
+
+  // The state that will handle the array on the frontend, prepopulated with a dummy item
   const [todosArray, setTodosArray] = useState([
     {
       content: "Pending load...",
@@ -16,8 +17,8 @@ export function ToDoList() {
       resolved: null,
     },
   ]);
-  // const dispatch = useDispatch();
 
+  // On mount fetch the list of all Todos from the Mongo database
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -35,8 +36,8 @@ export function ToDoList() {
           throw new Error("Failed to fetch Todos");
         }
         const todos = response.data.todos;
+        // Set the state so the list can be displayed to the user
         setTodosArray([...todos]);
-        // dispatch(setTodosArray([...todos]));
       } catch (error) {
         console.log(error);
       }
@@ -45,17 +46,17 @@ export function ToDoList() {
     getTodos();
 
     return () => {
-      // cleanup
+      // Cleanup function
 
       controller.abort();
     };
   }, []);
 
+  // Creating a new Todo
   async function submitHandler(event) {
     event.preventDefault();
     const newTodo = {
       content: todoText,
-      completed: false,
     };
     try {
       const postOptions = {
@@ -68,15 +69,17 @@ export function ToDoList() {
       if (response.status !== 201) {
         throw new Error("Unable to create a new Todo");
       } else {
+        // Reset the state for the input string
         setTodoText("");
+        // Set the Todos array to the previous state plus the new Todo that was added
         setTodosArray((prevState) => [...prevState, response.data.response]);
-        // dispatch(setTodosArray([...todosArray, response.data.response]));
       }
     } catch (error) {
       console.log(error);
     }
   }
 
+  // Deleting a Todo based on the id
   async function deleteHandler(id) {
     try {
       const options = {
@@ -94,13 +97,13 @@ export function ToDoList() {
         const newArray = todosArray.filter((item) => item._id !== id);
 
         setTodosArray([...newArray]);
-        console.log("Succesfully updated");
       }
     } catch (error) {
       console.log(error);
     }
   }
 
+  // The handler for the user input
   function changeHandler(event) {
     setTodoText(event.target.value);
   }
@@ -123,8 +126,8 @@ export function ToDoList() {
         </label>
       </form>
       <div>
+        {/* Iterating over the todosArray in order to generate the items. Pass the delete handler function as a prop along with  the todo data for the respective item */}
         {todosArray.map((todo) => {
-          // console.log(todo);
           return (
             <ToDo
               key={todo._id}
@@ -134,9 +137,6 @@ export function ToDoList() {
           );
         })}
       </div>
-      {/* <button onClick={() => deleteHandler("6590578ef00bf0075aaafeed")}>
-        Test
-      </button> */}
     </div>
   );
 }

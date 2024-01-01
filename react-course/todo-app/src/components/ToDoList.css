@@ -27,6 +27,7 @@
   }
 }
 
+/* This styles the label so thast when the form filed is focused, the "placeholder" text goes above the input field */
 .form__label {
   position: absolute;
   top: 0;

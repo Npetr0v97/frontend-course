@@ -2,21 +2,23 @@ import { NextResponse } from "next/server";
 import connectMongoDB from "../../../../libs/mongodb";
 import Todo from "../../../../models/todo";
 
+// Creating a new Todo
 export async function POST(request) {
-  const { content, completed } = await request.json();
+  const { content } = await request.json();
   await connectMongoDB();
 
+  // Defining the Todo. Content is coming from the user input. Completed and Resolved by default are false/empty
   const todo = {
     content,
-    completed,
+    completed: false,
     resolved: null,
   };
-  console.log(todo);
 
   const response = await Todo.create(todo);
   return NextResponse.json({ response }, { status: 201 });
 }
 
+// Geting the list of all Todos
 export async function GET(request) {
   await connectMongoDB();
 

@@ -6,6 +6,7 @@
   border-radius: 8px; /* Rounded edges */
   padding: 8px 20px 12px 20px;
   opacity: 0;
+  cursor: context-menu;
 }
 
 .labelShown {

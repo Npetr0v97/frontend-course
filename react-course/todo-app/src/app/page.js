@@ -8,10 +8,12 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import { Ubuntu } from "next/font/google";
 
+// A different font... because why not
 const ubuntu = Ubuntu({ subsets: ["latin"], weight: "300" });
 
 export default function Home() {
   return (
+    // Providing the Redux store to the whole app by default, even though it is used only for the InfoPanel and FactPanel components
     <Provider store={store}>
       <main className={`${styles.main} ${ubuntu.className}`}>
         <Frame>

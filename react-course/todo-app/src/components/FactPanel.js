@@ -4,13 +4,17 @@ import { useSelector } from "react-redux";
 import { useFetchData } from "../hooks/useFetchData";
 import { onClickIndexChanger } from "../../utils/helperFunctions";
 
+// The panel on the right that is displaying the interesting quotes
 function FactPanel() {
+  // Fetch initial data from the Redux store
   const interestingFactData = useSelector(
     (state) => state.dashboardData.interestingFactArray
   );
 
+  // Define state that will help with changing and rerendering quotes
   const [currentArrIndex, setCurrentArrIndex] = useState(0);
 
+  // Axios options for the GET Request
   const interestingFactOptions = {
     method: "GET",
     url: "https://numbersapi.p.rapidapi.com/random/trivia",
@@ -26,6 +30,7 @@ function FactPanel() {
     },
   };
 
+  // Fetch data
   useFetchData(interestingFactOptions, "FACT");
 
   return (

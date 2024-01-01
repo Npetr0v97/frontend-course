@@ -4,15 +4,18 @@ import { useSelector } from "react-redux";
 import { useFetchData } from "../hooks/useFetchData";
 import { onClickIndexChanger } from "../../utils/helperFunctions";
 
+
+// The panel on the left that is displaying the inspirational quotes
 function InfoPanel() {
+  // Fetch initial data from the Redux store
   const inspirationalQuoteData = useSelector(
     (state) => state.dashboardData.inspirationalQuoteArray
   );
 
+  // Define state that will help with changing and rerendering quotes
   const [currentArrIndex, setCurrentArrIndex] = useState(0);
-  //api -> https://docs.zenquotes.io/zenquotes-documentation/
-  //fetch via AXIOS
 
+  // Axios options for the GET Request
   const inspQuoteOptions = {
     method: "GET",
     url: "https://olato-quotes.p.rapidapi.com/motivation",
@@ -25,6 +28,7 @@ function InfoPanel() {
     },
   };
 
+  // Fetch data
   useFetchData(inspQuoteOptions, "QUOTE");
 
   return (
