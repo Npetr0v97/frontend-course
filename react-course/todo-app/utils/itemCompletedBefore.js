@@ -10,8 +10,8 @@ export default function itemCompletedBefore(timeInMilliseconds) {
     case itemCompletedBeforeMinutes >= 60 && itemCompletedBeforeMinutes < 1440:
       result = `${Math.floor(itemCompletedBeforeMinutes / 60, 1)}h ago`;
       break;
-    case itemCompletedBeforeMinutes >= 60 && itemCompletedBeforeMinutes < 1440:
-      result = `${Math.floor(itemCompletedBeforeMinutes / 60, 1)}h ago`;
+    case itemCompletedBeforeMinutes >= 1440:
+      result = `${Math.floor(itemCompletedBeforeMinutes / 1440, 1)}d ago`;
       break;
   }
 
