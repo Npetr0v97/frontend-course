@@ -2,8 +2,9 @@ import mongoose, { Schema } from "mongoose";
 
 const todoSchema = new Schema(
   {
-    content: String,
+    content: { type: String, required: true },
     completed: Boolean,
+    resolved: Date,
   },
   { timestamps: true }
 );

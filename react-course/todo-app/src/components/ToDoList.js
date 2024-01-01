@@ -4,15 +4,19 @@ import "./ToDoList.css";
 import ToDo from "./ToDo";
 import { useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { setTodosArray } from "../../features/todosData/todosData";
 
 export function ToDoList() {
-  // const [todoText, setTodoText] = useState("");
-  const todosArray = useSelector((state) => state.todosData);
-
-  const dispatch = useDispatch();
+  const [todoText, setTodoText] = useState("");
+  // const todosArray = useSelector((state) => state.todosData);
+  const [todosArray, setTodosArray] = useState([
+    {
+      content: "Pending load...",
+      completed: false,
+      _id: "xxx",
+      resolved: null,
+    },
+  ]);
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -31,8 +35,8 @@ export function ToDoList() {
           throw new Error("Failed to fetch Todos");
         }
         const todos = response.data.todos;
-
-        dispatch(setTodosArray([...todos]));
+        setTodosArray([...todos]);
+        // dispatch(setTodosArray([...todos]));
       } catch (error) {
         console.log(error);
       }
@@ -60,14 +64,37 @@ export function ToDoList() {
         data: newTodo,
       };
       const response = await axios.request(postOptions);
-      console.log(response);
+
       if (response.status !== 201) {
         throw new Error("Unable to create a new Todo");
       } else {
-        console.log(response.data.response);
         setTodoText("");
-        // setTodosArray((prevState) => [...prevState, response.data.response]);
-        dispatch(setTodosArray([...todosArray, response.data.response]));
+        setTodosArray((prevState) => [...prevState, response.data.response]);
+        // dispatch(setTodosArray([...todosArray, response.data.response]));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function deleteHandler(id) {
+    try {
+      const options = {
+        method: "DELETE",
+        url: `http://localhost:3000/api/todos`,
+        params: {
+          id,
+        },
+      };
+
+      const response = await axios.request(options);
+      if (response.status != 200) {
+        throw new Error("Unable to delete Todo");
+      } else {
+        const newArray = todosArray.filter((item) => item._id !== id);
+
+        setTodosArray([...newArray]);
+        console.log("Succesfully updated");
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +114,7 @@ export function ToDoList() {
           placeholder="Name"
           name="todo"
           id="todo"
-          // value={todoText}
+          value={todoText}
           onChange={changeHandler}
           required
         />
@@ -98,9 +125,18 @@ export function ToDoList() {
       <div>
         {todosArray.map((todo) => {
           // console.log(todo);
-          return <ToDo key={todo._id} todoData={todo} />;
+          return (
+            <ToDo
+              key={todo._id}
+              todoData={todo}
+              deleteHandler={deleteHandler}
+            />
+          );
         })}
       </div>
+      {/* <button onClick={() => deleteHandler("6590578ef00bf0075aaafeed")}>
+        Test
+      </button> */}
     </div>
   );
 }

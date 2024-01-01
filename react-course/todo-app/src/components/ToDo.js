@@ -1,86 +1,136 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./ToDo.module.css";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setTodosArray,
-  updateCompletedValue,
-} from "../../features/todosData/todosData";
+import Label from "./Label";
 
-function ToDo({ todoData }) {
-  const dispatch = useDispatch();
+function ToDo({ todoData, deleteHandler }) {
+  const [currentTodo, setCurrentTodo] = useState({ ...todoData });
+  const [isEditing, setIsEditing] = useState(false);
+  const [todoText, setTodoText] = useState(todoData.content);
+  const inputRef = useRef(null);
 
   async function changeHandler() {
+    const resolved = !currentTodo.completed ? new Date() : null;
+
     const newTodo = {
-      ...todoData,
-      completed: !todoData.completed,
+      ...currentTodo,
+      resolved: resolved,
+      completed: !currentTodo.completed,
     };
-
-    // dispatch(
-    //     updateCompletedValue({
-    //       id: todoData._id,
-    //       newCompleted: newTodo.completed,
-    //     })
-    //   );
-
-    const controller = new AbortController();
-    const signal = controller.signal;
+    console.log(newTodo);
 
     try {
       const options = {
         method: "PUT",
-        url: `http://localhost:3000/api/todos/${todoData._id}`,
-
+        url: `http://localhost:3000/api/todos/${currentTodo._id}`,
         data: newTodo,
-        signal,
       };
 
       const response = await axios.request(options);
       if (response.status != 200) {
         throw new Error("Unable to update Todo");
       } else {
-        console.log("Succesfully updated");
+        // setIsChecked((prevState) => !prevState);
+        setCurrentTodo({ ...response.data });
+        console.log(response.data);
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function handleDelete() {
-    // try {
-    //   const postOptions = {
-    //     method: "POST",
-    //     url: "http://localhost:3000/api/todos",
-    //     data: newTodo,
-    //   };
-    //   const response = await axios.request(postOptions);
-    //   console.log(response);
-    //   if (response.status !== 201) {
-    //     throw new Error("Unable to create a new Todo");
-    //   } else {
-    //     console.log(response.data.response);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    console.log("Deleted");
+  function inputClickHandler() {
+    if (!currentTodo.completed) {
+      setIsEditing(true);
+    }
   }
+
+  function inputChangeHandler(e) {
+    setTodoText(e.target.value);
+  }
+
+  async function inputBlurAndSubmitHandler(e) {
+    e.preventDefault();
+    setIsEditing(false);
+
+    if (todoText == "") {
+      return;
+    }
+    const newTodo = {
+      ...currentTodo,
+      content: todoText,
+    };
+
+    try {
+      const options = {
+        method: "PUT",
+        url: `http://localhost:3000/api/todos/${currentTodo._id}`,
+        data: newTodo,
+      };
+
+      const response = await axios.request(options);
+      if (response.status != 200) {
+        throw new Error("Unable to update Todo");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
 
   return (
     <div className={styles.mainDiv}>
-      <input
-        type="checkbox"
-        id="isChecked"
-        className={styles.checkbox}
-        checked={todoData.completed}
-        onChange={changeHandler}
+      <div className={styles.secondaryDiv}>
+        <input
+          type="checkbox"
+          id="isChecked"
+          className={styles.checkbox}
+          checked={currentTodo.completed}
+          onChange={changeHandler}
+        />
+
+        {isEditing ? (
+          <form onSubmit={inputBlurAndSubmitHandler}>
+            <input
+              className={styles.input}
+              value={todoText}
+              onChange={inputChangeHandler}
+              onBlur={inputBlurAndSubmitHandler}
+              ref={inputRef}
+              required
+            />
+          </form>
+        ) : (
+          <h3
+            className={`${styles.content} ${
+              currentTodo.completed ? styles.contentBlur : ""
+            }`}
+            onClick={inputClickHandler}
+          >
+            {todoText === "" ? todoData.content : todoText}
+          </h3>
+        )}
+
+        <button
+          onClick={() => deleteHandler(currentTodo._id)}
+          className={styles.deleteButton}
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      </div>
+      <hr
+        className={`${styles.strikethrough} ${
+          currentTodo.completed ? styles.strWidth : ""
+        }`}
       />
-      <h3 className={styles.content}>{todoData.content}</h3>
-      <button onClick={handleDelete} className={styles.deleteButton}>
-        <FontAwesomeIcon icon={faTrash} />
-      </button>
+      <Label resolved={currentTodo.resolved} />
     </div>
   );
 }

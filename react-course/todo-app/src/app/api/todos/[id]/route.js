@@ -1,16 +1,15 @@
 import { NextResponse } from "next/server";
 import connectMongoDB from "../../../../../libs/mongodb";
 import Todo from "../../../../../models/todo";
-import { useDispatch } from "react-redux";
-import { updateCompletedValue } from "../../../../../features/todosData/todosData";
 
 export async function PUT(request, { params }) {
   const { id } = params;
-  const { content, completed } = await request.json();
 
+  const { content, completed, resolved } = await request.json();
+  const newTodo = { content, completed, resolved };
   await connectMongoDB();
 
-  const response = await Todo.findByIdAndUpdate(id, { content, completed });
+  const response = await Todo.findByIdAndUpdate(id, newTodo, { new: true });
 
   return NextResponse.json(response, { status: 200 });
 }

@@ -6,7 +6,14 @@ export async function POST(request) {
   const { content, completed } = await request.json();
   await connectMongoDB();
 
-  const response = await Todo.create({ content, completed });
+  const todo = {
+    content,
+    completed,
+    resolved: null,
+  };
+  console.log(todo);
+
+  const response = await Todo.create(todo);
   return NextResponse.json({ response }, { status: 201 });
 }
 
